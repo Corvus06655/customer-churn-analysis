@@ -1,51 +1,84 @@
-# Telecom Customer Churn Analysis
+# Customer Churn Analysis — Telecom Retention Case Study
 
-A reproducible Python analysis of **7,043 telecom customers** designed to identify observed churn patterns and translate them into retention actions.
+A Python and Pandas analysis of telecom customer behavior, focused on identifying churn patterns that can support retention prioritization. The project examines contract type, tenure, services, billing behavior, payment method, and customer charges.
 
-> **Portfolio focus:** data cleaning, exploratory analysis, customer segmentation, churn-rate comparison, and business recommendations.
+> **Portfolio focus:** data cleaning, segmentation, churn-rate measurement, contract comparison, retention reasoning, and visual communication.
 
 ## Business objective
 
-Customer churn reduces recurring revenue and increases acquisition costs. This project examines which customer segments show higher observed churn rates so a retention team can prioritize outreach, contract conversion, and service improvements.
+Customer-retention teams need to understand which customer groups leave most often and where an intervention may be useful. This case study compares churn across contract structures and customer attributes while keeping the conclusions descriptive rather than causal.
 
-## Dataset and quality
+## Verified dataset facts
 
-The dataset contains 7,043 customers and 21 columns, with zero duplicate rows. The target field is `Churn`, and the overall observed churn rate is 26.5%. The notebook converts numeric fields such as `TotalCharges`, checks data types, reviews missing values, and uses grouped comparisons to make segment-level patterns visible.
+The dataset contains **7,043 customers**, 21 analytical columns, zero duplicate customer IDs, and **1,869 churned customers** [1]. The observed overall churn rate is **26.54%**.
+
+| Metric | Verified result |
+|---|---:|
+| Customers | 7,043 |
+| Churned customers | 1,869 |
+| Overall churn rate | 26.54% |
+| Highest-churn contract | Month-to-month: 42.71% |
+| Lowest-churn contract | Two year: 2.83% |
+| Duplicate customer IDs | 0 |
 
 ## Visual evidence
 
-![Observed churn rate by contract type](images/churn_contract_rate.png)
+![Churn rate by contract](images/churn_contract_rate.png)
 
-## Observed findings
+The chart compares observed churn rates by contract type. It does not establish that contract type causes churn; tenure, pricing, service usage, acquisition channel, and customer experience may also contribute.
 
-**Overall churn:** 26.5% of customers are marked as churned in the supplied dataset.
+## Key business insights
 
-**Contract comparison:** month-to-month customers show a 42.7% observed churn rate, compared with 11.3% for one-year contracts and 2.8% for two-year contracts.
+Month-to-month customers have the highest observed churn rate at **42.71%**, while two-year customers have the lowest at **2.83%**. The gap suggests a practical retention question: whether month-to-month customers should receive earlier engagement, service-quality follow-up, or contract-transition offers. Any intervention should be tested against a defined control group rather than assumed to work.
 
-**Interpretation:** this is descriptive segmentation, not a causal or production prediction model. Contract type is associated with different churn rates in this dataset, but the project does not claim that contract type alone causes churn.
+The analysis should also be segmented by tenure, monthly charges, internet service, support services, and payment method. Contract type is a useful first cut, not a complete churn explanation.
 
 ## Analytical workflow
 
-The notebook inspects the schema, duplicates, missing values, and numeric types; cleans and standardizes fields; calculates overall and grouped churn rates; compares contract, tenure, billing, and service segments; and translates the largest observed differences into retention questions.
+The notebook cleans the `TotalCharges` field, converts numeric columns, checks identifiers, explores the target variable, and uses grouped summaries and charts to compare churn behavior. The repository includes a small validation script so a reviewer can confirm the source row count, identifier uniqueness, and target labels before opening the notebook.
 
-## Business recommendations
+## Data-quality checks
 
-Use month-to-month customers as the first segment for retention experiments and contract-conversion campaigns. Pair contract analysis with tenure, monthly charges, payment method, and support-service behavior before targeting individual customers. Validate any intervention with a controlled experiment or pre/post measurement rather than assuming an observed association is causal.
+The validation script checks for the expected 21 columns, duplicate customer IDs, blank `TotalCharges` values, and invalid values outside the `Yes`/`No` churn labels. It also confirms that the documented customer count and churn count match the CSV used by the notebook.
 
-## Tools and repository contents
+## Repository structure
 
-`Python` · `Pandas` · `NumPy` · `Matplotlib` · `Seaborn` · `Jupyter Notebook`
+```text
+├── Customer.csv
+├── README.md
+├── TCA.ipynb
+├── images/
+│   └── churn_contract_rate.png
+├── scripts/
+│   └── validate_data.py
+├── requirements.txt
+└── Teco Customer Churn Analysys.pdf
+```
 
-The repository contains `Customer.csv`, the `TCA.ipynb` analysis notebook, the presentation PDF, and the verified chart preview at `images/churn_contract_rate.png`.
+## How to reproduce
 
-## Run locally
+```bash
+git clone https://github.com/Corvus06655/customer-churn-analysis.git
+cd customer-churn-analysis
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/validate_data.py
+```
 
-Clone the repository, install the dependencies with `pip install -r requirements.txt`, and open `TCA.ipynb` in Jupyter Notebook.
+Then open `TCA.ipynb` in Jupyter and run the cells from top to bottom. The included PDF is a supplementary project artifact; the notebook and CSV are the primary reproducibility inputs.
 
-## Limitations and next steps
+## Data provenance and limitations
 
-This is a descriptive portfolio project. A production-ready churn model would require a defined prediction horizon, a time-aware validation split, a baseline model, precision/recall or ROC-AUC reporting, probability calibration, and monitoring for drift. A useful next extension would be a retention cohort analysis or a validated logistic-regression baseline.
+The repository contains the customer-level CSV used for this educational analysis. The dataset is commonly used for telecom churn practice and should be treated as an anonymized analytical extract rather than a live customer system. It does not support causal claims about why customers churn without additional experiment, service-quality, and longitudinal data.
 
----
+## References
 
-*Part of Mayank Srivastava's Data Analyst portfolio. Project evidence is intended for learning and portfolio demonstration, not for making decisions about individual customers.*
+[1]: Customer.csv — customer-level source extract.
+[2]: TCA.ipynb — cleaning, exploratory analysis, and churn comparison workflow.
+[3]: images/churn_contract_rate.png — contract-level churn visualization.
+
+## Author
+
+**Mayank Srivastava** · [GitHub](https://github.com/Corvus06655) · [LinkedIn](https://linkedin.com/in/mayank-srivastava-076020215)
